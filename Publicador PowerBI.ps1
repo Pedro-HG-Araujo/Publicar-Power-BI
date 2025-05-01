@@ -9,5 +9,19 @@ foreach($dados in $Json) {
     $path = $dados.PastaDestino
     $FilePath = "$path$reportDestino.pbix"
 
-    
+    # Buscar o workspace pelo nome
+    $workspace = Get-PowerBIWorkspace -Name $workspaceName
+    if (-not $workspace) {
+        Write-Error "Workspace '$workspaceName' nao encontrado."
+        exit
+    }
+    # Buscar o relatório dentro do workspace
+    $report = Get-PowerBIReport -WorkspaceId $workspace.Id | Where-Object { $_.Name -eq $reportName }
+    if (-not $report) {
+        Write-Error "Relatorio '$reportName' nao encontrado no workspace '$workspaceName'."
+        exit
+    }
+    # Publicar o arquivo .pbix
+    New-PowerBIReport -Path $FilePath -Name $reportDestino -WorkspaceId $workspace.Id -ConflictAction CreateOrOverwrite
+
 }
