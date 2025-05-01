@@ -15,13 +15,13 @@ foreach($dados in $Json) {
         Write-Error "Workspace '$workspaceName' nao encontrado."
         exit
     }
-    # Buscar o relatório dentro do workspace
-    $report = Get-PowerBIReport -WorkspaceId $workspace.Id | Where-Object { $_.Name -eq $reportName }
-    if (-not $report) {
-        Write-Error "Relatorio '$reportName' nao encontrado no workspace '$workspaceName'."
-        exit
-    }
     # Publicar o arquivo .pbix
+    try {
     New-PowerBIReport -Path $FilePath -Name $reportDestino -WorkspaceId $workspace.Id -ConflictAction CreateOrOverwrite
+    Write-Host "Relatorio $reportDestino foi publicado com sucesso para $workspaceName"
+    }
+    catch {
+        Write-Error "Erro ao exportar o relatorio $reportDestino: $_"
+    }
 
 }
