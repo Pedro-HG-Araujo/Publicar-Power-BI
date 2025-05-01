@@ -1,6 +1,8 @@
 Import-Module MicrosoftPowerBIMgmt -ErrorAction Stop
+
 Connect-PowerBIServiceAccount
-$jsonFilePath = "Teste.json"
+
+$jsonFilePath = "ArquivosPBIX.json"
 $Json = Get-Content -Path $jsonFilePath -Encoding UTF8 | ConvertFrom-Json
 foreach($dados in $Json) {
     $workspaceName = $dados.WorkpaceDestino
@@ -21,7 +23,7 @@ foreach($dados in $Json) {
     Write-Host "Relatorio $reportDestino foi publicado com sucesso para $workspaceName"
     }
     catch {
-        Write-Error "Erro ao exportar o relatorio $reportDestino: $_"
+        Write-Error "Erro ao publicar o relatorio $reportDestino : $_"
     }
 
 }
