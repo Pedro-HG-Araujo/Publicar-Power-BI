@@ -1,32 +1,57 @@
-# 🚀📊Exportar e Publicar Relatórios do Power BI (.pbix)
-## Essa solução visa facilitar o processo de exportação de arquivos pbix e também a publicação.
-Neste repositório é possível encontrar os seguintes arquivos:  
-\ArquivosPBIX.json  
-\Extrator PowerBI.ps1  
-\Publicador PowerBI.ps1  
-\main.ps1  
+# Módulo FuncoesPBI
 
-## "ArquivosPBIX.json" 
-Mapeia os relatórios que deve ser baixados/publicados  
+Este pacote instala e configura o módulo `FuncoesPBI` para automatização de publicações e exportações de relatórios Power BI via PowerShell.
 
-Os parâmetros essenciais:  
-WorkpaceOrigem - Definido com o nome do Workspace em que o relatório que será baixado se encontra  
-WorkpaceDestino - Definido com o nome do Workspace em que o relatório será publicado  
-ReportOrigem - Definido com o nome do Report que está no Workspace e/ou será publicado  
-PastaDestino - Caminho em que o arquivo deve ser baixado e/ou lido para a publicação  
-ReportDestino - (Opcional) - Caso queira que o arquivo seja baixado com um nome diferente do de origem, o arquivo será gravado com o nome definido neste campo    
+## 📦 Conteúdo do Pacote
 
-## Extração
-Na etapa de extração, serão verificados a existência do Workspace e Relatório definidos.
-Se o campo ReportDestino estiver preenchido, o arquivo será exportado com o nome definido neste parâmetro no caminho também definido no json.
+- `Instalador.exe` – Executável responsável por instalar o módulo no PowerShell.  
+- Pasta `FuncoesPBI` com os arquivos:
+  - `FuncoesPBI.psm1`
+  - `Funcoes.ps1`
+  - `Publicador PowerBI.ps1`
+  - `Extrator PowerBI.ps1`
 
-## Publicação
-Na etapa de publicação, será verificada a existência do Workspace de destino e o relatório será publicado conforme o nome 
-definido no json
+---
 
-# Execução
-Ao executar o main.ps1, será solicitado o login para a origem e a extração será inicializada. 
-Após isso, será solicitado o login para o destino e então será realizada a publicação dos relatórios.
+## ✅ Como Instalar
 
-Tanto o Extrator quanto o Publicador podem ser utilizados de forma independentes. 
-O arquivo "main.ps1" foi criado apenas para facilitar a execução das duas etapas de forma ordenada
+1. **Extraia o `.zip`** em uma pasta local, como por exemplo: `C:\PowerBIInstaller\`
+2. **Execute como Administrador**:
+  - Clique com o botão direito em `Instalador.exe`
+  - Selecione **Executar como administrador**
+3. O módulo será instalado em: `C:\Program Files\WindowsPowerShell\Modules\FuncoesPBI\`
+
+## 🧪 Testando a Instalação
+
+Abra o PowerShell e execute:
+
+```powershell
+Import-Module FuncoesPBI
+Get-Command -Module FuncoesPBI
+```
+Isso deve listar as funções `Publicacao` e `Exportacao`.
+
+## 🚀 Exemplos de Uso
+
+1. Exportacao e Publicação Manuais
+```powershell
+Exportacao -Manual "Sim" -jsonFilePath "C:\caminho\ArquivosPBIX.json"
+Publicacao -Manual "Sim" -jsonFilePath "C:\caminho\ArquivosPBIX.json"
+```
+  Isso fará aparecer um pop-up para preencher as credenciais de acesso da origem/destino
+
+2. Exportacao e Publicação Não Manual
+```powershell
+Exportacao -Manual "Nao" -jsonFilePath "C:\caminho\ArquivosPBIX.json" -TipoAcesso "U" -Usuario "Usuario" -Senha "Senha"
+Publicacao -Manual "Nao" -jsonFilePath "C:\caminho\ArquivosPBIX.json" -TipoAcesso "T" -jsonFilePathTenant "C:\caminho\ClientesPBIX.json"
+```
+
+## ℹ️ Requisitos
+
+  - `Windows PowerShell 5.1`
+  - `Permissão de administrador para instalação`
+  - `Power BI Service (com permissões de publicação/exportação)`
+
+
+
+
