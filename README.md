@@ -46,6 +46,35 @@ Exportacao -Manual "Nao" -jsonFilePath "C:\caminho\ArquivosPBIX.json" -TipoAcess
 Publicacao -Manual "Nao" -jsonFilePath "C:\caminho\ArquivosPBIX.json" -TipoAcesso "T" -jsonFilePathTenant "C:\caminho\ClientesPBIX.json"
 ```
 
+## ⚙️ Exemplo de Configuração dos Arquivos JSONs
+Configuração dos JSONs:
+1. `ArquivosPBIX.json`
+```json
+[
+    {
+        "WorkpaceOrigem":"Homolog"
+        ,"ReportOrigem":"Report_Teste"
+        ,"WorkpaceDestino":"Producao"
+        ,"ReportDestino":"Report_Nome_Novo"
+        ,"PastaDestino":"C:\\caminho\\pbix\\"
+        ,"TenantDestino":"CLIENTE A"
+    }
+]
+```
+2. `ClientesPBIX.json`
+```json
+[
+    {
+        "Cliente":"CLIENTE A",
+        "Credencial":{
+             "TenantId":"xxxxxxxxxxxxxxxx"
+            ,"clientId":"xxxxxxxxxxxxxxxx"
+            ,"clientSecret":"xxxxxxxxxxxxxxxx"
+        }
+    }
+]
+```
+
 ## ℹ️ Requisitos
 
   - `Windows PowerShell 5.1`
