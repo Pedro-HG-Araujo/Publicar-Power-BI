@@ -1,33 +1,43 @@
 function Publicar-Pbix-Tenat {
     param (
-        [string]$pbixPath,
-        [string]$datasetDisplayName,
-        [string]$groupId,
+        [string]$FilePath,
+        [string]$reportDestino,
+        [string]$workspaceName,
         [string]$token
     )
+    $headers = @{ Authorization = "Bearer $token" }
+    $groups = Invoke-RestMethod -Method Get -Uri "https://api.powerbi.com/v1.0/myorg/groups" -Headers $headers
+    $workspace = $groups.value | Where-Object { $_.name -eq $workspaceName }
+    if (-not $workspace){
+        Write-Error "O Workspace $workpaceName nao foi encontrado."
+        Exit
+    }
+    
+    $groupId = $workspace.id
+    $uploadUri = "https://api.powerbi.com/v1.0/myorg/groups/$groupId/imports?datasetDisplayName=$reportDestino&nameConflict=CreateOrOverwrite"
 
-    $uploadUri = "https://api.powerbi.com/v1.0/myorg/groups/$groupId/imports?datasetDisplayName=$datasetDisplayName&nameConflict=CreateOrOverwrite"
+    # Ler o PBIX
+    $pbixBytes = [System.IO.File]::ReadAllBytes($FilePath)
 
-    # HttpClient para upload
-    $client = New-Object System.Net.Http.HttpClient
-    $request = New-Object System.Net.Http.HttpRequestMessage 'Post', $uploadUri
-    $request.Headers.Add("Authorization", "Bearer $token")
-
-    # Ler o arquivo
-    $pbixBytes = [System.IO.File]::ReadAllBytes($pbixPath)
-    $byteArrayContent = New-Object System.Net.Http.ByteArrayContent -ArgumentList ($pbixBytes)
+    # Criar o conteúdo HTTP
+    $byteArrayContent = [System.Net.Http.ByteArrayContent]::new($pbixBytes)
     $byteArrayContent.Headers.ContentType = [System.Net.Http.Headers.MediaTypeHeaderValue]::Parse("application/octet-stream")
 
-    $multipartContent = New-Object System.Net.Http.MultipartFormDataContent
-    $multipartContent.Add($byteArrayContent, "file", [System.IO.Path]::GetFileName($pbixPath))
+    $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
+    $multipartContent.Add($byteArrayContent, "file", [System.IO.Path]::GetFileName($FilePath))
 
+    #Requisicao HTTP
+    $request = [System.Net.Http.HttpRequestMessage]::new("Post", $uploadUri)
+    $request.Headers.Add("Authorization", "Bearer $token")
     $request.Content = $multipartContent
+
+    $client = [System.Net.Http.HttpClient]::new()
     $response = $client.SendAsync($request).Result
 
     if ($response.IsSuccessStatusCode) {
-        Write-Host "✅ Publicação de '$datasetDisplayName' concluída com sucesso!"
+        Write-Host "Publicação de '$reportDestino' concluída com sucesso!"
     } else {
-        Write-Error "❌ Falha ao publicar '$datasetDisplayName': $($response.StatusCode)"
+        Write-Error "Falha ao publicar '$reportDestino': $($response.StatusCode)"
         Write-Host $response.Content.ReadAsStringAsync().Result
     }
 }

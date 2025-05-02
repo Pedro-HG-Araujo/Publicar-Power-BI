@@ -15,7 +15,7 @@ function Exportacao {
         exit 
     }
 
-    if ($Manual = "Sim") { ## Extrai com Interação em tela para Login
+    if ($Manual -eq "Sim") { ## Extrai com Interação em tela para Login
         Write-Host "`n --- Faca Login no Servico de ORIGEM no Pop-Up --- `n"
         Connect-PowerBIServiceAccount
 

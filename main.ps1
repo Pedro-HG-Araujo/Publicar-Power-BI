@@ -1,4 +1,6 @@
 Import-Module .\FuncoesPBI.psm1
 
-Exportacao -Manual "Sim" -jsonFilePath "Teste.json"
-Publicacao -Manual "Sim" -jsonFilePath "Teste.json"
+# Exemplos de uso
+# Exportacao -Manual "Sim" -jsonFilePath "ArquivosPBIX.json"
+# Publicacao -Manual "Sim" -jsonFilePath "ArquivosPBIX.json"
+# Publicacao -Manual "Nao" -jsonFilePath "ArquivosPBIX.json" -jsonFilePathTenant "ClientesPBIX.json"

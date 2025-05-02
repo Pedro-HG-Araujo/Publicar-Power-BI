@@ -1,0 +1,19 @@
+[
+    {
+        "Cliente":"",
+        "Credencial":{
+             "TenantId":""
+            ,"clientId":""
+            ,"clientSecret":""
+        }
+    }
+    ,
+    {
+        "Cliente":"",
+        "Credencial":{
+             "TenantId":""
+            ,"clientId":""
+            ,"clientSecret":""
+        }
+    }
+]
