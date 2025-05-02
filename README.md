@@ -33,14 +33,14 @@ Isso deve listar as funções `Publicacao` e `Exportacao`.
 
 ## 🚀 Exemplos de Uso
 
-1. Exportacao e Publicação Manuais
+1. Exportacao e Publicação `Manual`
 ```powershell
 Exportacao -Manual "Sim" -jsonFilePath "C:\caminho\ArquivosPBIX.json"
 Publicacao -Manual "Sim" -jsonFilePath "C:\caminho\ArquivosPBIX.json"
 ```
   Isso fará aparecer um pop-up para preencher as credenciais de acesso da origem/destino
 
-2. Exportacao e Publicação Não Manual
+2. Exportacao e Publicação `Automática`
 ```powershell
 Exportacao -Manual "Nao" -jsonFilePath "C:\caminho\ArquivosPBIX.json" -TipoAcesso "U" -Usuario "Usuario" -Senha "Senha"
 Publicacao -Manual "Nao" -jsonFilePath "C:\caminho\ArquivosPBIX.json" -TipoAcesso "T" -jsonFilePathTenant "C:\caminho\ClientesPBIX.json"
