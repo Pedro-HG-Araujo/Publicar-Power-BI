@@ -66,6 +66,7 @@ function Publicacao {
                 Write-Error "O parâmetro 'jsonFilePathTenant' não foi definido."
                 exit 
             }
+            Write-Host "Iniciando processo de publicacao com Tenant em Json"
             $Json = Get-Content -Path $jsonFilePath -Encoding UTF8 | ConvertFrom-Json
             $jsonTenant = Get-Content -Path $jsonFilePathTenant -Encoding UTF8 -Raw | ConvertFrom-Json
             foreach($dados in $Json) {
@@ -75,13 +76,14 @@ function Publicacao {
                 $path = $dados.PastaDestino
                 $FilePath = "$path$reportDestino.pbix"
 
-                if(![String]::IsNullOrWhiteSpace($dados.TenantOrigem)){
-                    $cliente_u = $dados.TenantOrigem
+                if(![String]::IsNullOrWhiteSpace($dados.TenantDestino)){
+                    $cliente_u = $dados.TenantDestino
                     $clienteDestino = $jsonTenant | Where-Object { $_.Cliente -eq $cliente_u}
                     if (-not $clienteDestino) {
-                        Write-Error "Cliente nao encontrado em Json"
+                        Write-Error "Credenciais nao definidas em Json de Paramatros do Tenant para o Cliente $cliente_u"
                         exit 
                     }
+                    Write-Host "Cliente Destino: $cliente_u"
 
                     $clientId = $clienteDestino.Credencial.clientId
                     $tenantId = $clienteDestino.Credencial.TenantId
@@ -100,7 +102,7 @@ function Publicacao {
 
                     Publicar-Pbix-Tenat -FilePath $FilePath -reportDestino $reportDestino -workspaceName $workspaceName -token $token
 
-                }
+                } else {Write-Error "Tenant Nao Definido"}
                 Start-Sleep -Seconds 3
             }
         }
