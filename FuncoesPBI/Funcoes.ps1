@@ -35,7 +35,7 @@ function Publicar-Pbix-Tenat {
     $response = $client.SendAsync($request).Result
 
     if ($response.IsSuccessStatusCode) {
-        Write-Host "Publicação de '$reportDestino' concluída com sucesso!"
+        Write-Host "Publicacao de '$reportDestino' concluida com sucesso!"
     } else {
         Write-Error "Falha ao publicar '$reportDestino': $($response.StatusCode)"
         Write-Host $response.Content.ReadAsStringAsync().Result
