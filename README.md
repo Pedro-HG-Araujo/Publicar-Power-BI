@@ -2,7 +2,7 @@
 
 Este pacote instala e configura o módulo `FuncoesPBI` para automatização de publicações e exportações de relatórios Power BI via PowerShell.
 
-## 📦 Conteúdo do Pacote
+## Conteúdo do Pacote
 
 - `Instalador.exe` – Executável responsável por instalar o módulo no PowerShell.  
 - Pasta `FuncoesPBI` com os arquivos:
@@ -13,7 +13,7 @@ Este pacote instala e configura o módulo `FuncoesPBI` para automatização de p
 
 ---
 
-## ✅ Como Instalar
+## Como Instalar
 
 1. **Extraia o `.zip`** em uma pasta local, como por exemplo: `C:\PowerBIInstaller\`
 2. **Execute como Administrador**:
@@ -21,7 +21,7 @@ Este pacote instala e configura o módulo `FuncoesPBI` para automatização de p
   - Selecione **Executar como administrador**
 3. O módulo será instalado em: `C:\Program Files\WindowsPowerShell\Modules\FuncoesPBI\`
 
-## 🧪 Testando a Instalação
+## Testando a Instalação
 
 Abra o PowerShell e execute:
 
@@ -31,7 +31,7 @@ Get-Command -Module FuncoesPBI
 ```
 Isso deve listar as funções `Publicacao` e `Exportacao`.
 
-## 🚀 Exemplos de Uso
+## Exemplos de Uso
 
 1. Exportacao e Publicação `Manual`
 ```powershell
@@ -46,7 +46,7 @@ Exportacao -Manual "Nao" -jsonFilePath "C:\caminho\ArquivosPBIX.json" -TipoAcess
 Publicacao -Manual "Nao" -jsonFilePath "C:\caminho\ArquivosPBIX.json" -TipoAcesso "T" -jsonFilePathTenant "C:\caminho\ClientesPBIX.json"
 ```
 
-## ⚙️ Exemplo de Configuração dos Arquivos JSONs
+## Exemplo de Configuração dos Arquivos JSONs
 Configuração dos JSONs:
 1. `ArquivosPBIX.json`
 ```json
@@ -75,7 +75,7 @@ Configuração dos JSONs:
 ]
 ```
 
-## ℹ️ Requisitos
+## Requisitos
 
   - `Windows PowerShell 5.1`
   - `Permissão de administrador para instalação`
